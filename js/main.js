@@ -18,7 +18,7 @@ $(document).ready(function(){
         }
     ]
 
-    let userAnswers = [];
+    let userAnswers = '';
 
     function stopGame(){
         $('.js-questions input:checked').each(function(){
@@ -44,6 +44,11 @@ $(document).ready(function(){
         $('.js-right').text(count);
         */
     }
+
+    function submitAnswer(){
+        userAnswers = $('input[name='+qNum+']:checked').val();
+
+    }
     // start game will start first countdown asking to get ready
     // then call function to actually show the first question/answer pair
     let startTime = 0;
@@ -54,54 +59,74 @@ $(document).ready(function(){
 
     // get first element of questions array
     function getQuestion(){
-        let q = questions.shift(); // object 
-        $('.js-questions').text(q.question);
-        for (var i = 0; i < q.answer.length; i++){
-            $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
-        }
-        qNum++;
-
-        let testTimer = true;
-        let gameTime = 5;
-        setInterval(function(){
-            if (testTimer){
-                $('.js-time').text(gameTime);
-                gameTime--;
-                if (gameTime < 0){
-                    testTimer = false;
-                    // call the function to get first question
-                    console.log("time up for question");
-                    $('.js-time').empty();
-                
-                }
+        if (questions.length !== 0){
+            
+            let q = questions.shift(); // object 
+            $('.js-questions').text(q.question);
+            for (var i = 0; i < q.answer.length; i++){
+                $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
             }
             
-        }, 1000);
+            //qNum++;
+    
+            let testTimer = true;
+            let gameTime = 5;
+            setInterval(function(){
+                if (testTimer){
+                    $('.js-time').text(gameTime);
+                    gameTime--;
+                    if (gameTime < 0){
+                        testTimer = false;
+                        console.log("time up for question");
+                        $('.js-time').empty();
+                        // in between countdown
+                        
+                        inBetweenCount();
+                        // also show right answer and image
+                        showAnswer();
+                        
+                    }
+                }
+                
+            }, 1000);
+        }
+        else{
+            console.log("no more questions");
+        }
+        
     }
 
+    function showAnswer(){
+        console.log("showAnswer");
+    }
     function inBetweenCount(){
-        let betweenCount = 3;
-        let testTimer = true;
-        setInterval(function(){
-            if (testTimer){
-                $('.js-time').text(betweenCount);
-                betweenCount--;
-                if (betweenCount < 0){
-                    testTimer = false;
-                    // call the function to get first question
-                    console.log("time up for question");
-                    $('.js-time').empty();
-                    // if questions array is not empty, grab another question
-                    if (questions.length !== 0){
+        userAnswers = $('input[name='+qNum+']:checked').val();
+            console.log(userAnswers);
+        if( questions.length !== 0){
+            let betweenCount = 3;
+            let testTimer = true;
+            $('.js-answers').empty();
+            $('.js-questions').empty();
+            setInterval(function(){
+                if (testTimer){
+                    $('.js-time').text(betweenCount);
+                    betweenCount--;
+                    if (betweenCount < 0){
+                        testTimer = false;
+                        // call the function to get first question
+                        console.log("time up for wait");
+                        $('.js-time').empty();
                         getQuestion();
-                    }
-                    else{
-                        console.log("no more questions");
+                        
                     }
                 }
-            }
-            
-        }, 1000);
+                
+            }, 1000);
+            qNum++;
+        }
+        else{
+            console.log("done");
+        }
     }
     function startGame(){
         

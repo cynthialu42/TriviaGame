@@ -18,7 +18,7 @@ $(document).ready(function(){
         }
     ]
 
-    let userAnswers = '';
+    let userAnswer = '';
 
     function stopGame(){
         $('.js-questions input:checked').each(function(){
@@ -31,13 +31,13 @@ $(document).ready(function(){
         });
 /*
         for (let i = 0; i < questions.length; i++){
-            userAnswers.push($('input[name=q'+i+']:checked').val());
+            userAnswer.push($('input[name=q'+i+']:checked').val());
         }
-        $('.js-answers').append(userAnswers);
+        $('.js-answers').append(userAnswer);
         
         let count = 0;
-        for (let j = 0; j < userAnswers.length; j++){
-            if (userAnswers[j] === questions[j].correctAnswer){
+        for (let j = 0; j < userAnswer.length; j++){
+            if (userAnswer[j] === questions[j].correctAnswer){
                 count++;
             }
         }
@@ -45,10 +45,10 @@ $(document).ready(function(){
         */
     }
 
-    function submitAnswer(){
-        userAnswers = $('input[name='+qNum+']:checked').val();
+    /*function submitAnswer(){
+        userAnswer = $('input[name='+qNum+']:checked').val();
 
-    }
+    }*/
     // start game will start first countdown asking to get ready
     // then call function to actually show the first question/answer pair
     let startTime = 0;
@@ -56,40 +56,20 @@ $(document).ready(function(){
 
     let qNum = 0;
   
-
+    let q = '';
     // get first element of questions array
     function getQuestion(){
         // Check array is populated
         if (questions.length > 0){
-            let q = questions.shift(); // take out the first object 
+            q = questions.shift(); // take out the first object 
             $('.js-questions').text(q.question);
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
                 $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
             }
             
-            //qNum++;
-    
-            // More time in the actual questions timer
-            let testTimer = true;
-            let gameTime = 5;
-            intervalId = setInterval(function(){
-                if (testTimer){
-                    $('.js-time').text(gameTime);
-                    gameTime--;
-                    if (gameTime < 0){
-                        testTimer = false;
-                        console.log("time up for question");
-                        $('.js-time').empty();
-                        // go to the inbetween  countdown
-                        inBetweenCount();
-                        // also show right answer and image
-                        showAnswer();
-                        
-                    }
-                }
-                
-            }, 1000);
+            let gameTime = 10;
+            countDown(gameTime, inBetweenCount);
         }
         else{
             console.log("no more questions");
@@ -97,66 +77,74 @@ $(document).ready(function(){
         
     }
 
-    function showAnswer(){
-        console.log("showAnswer");
-    }
 
     function stopTimer(){
         clearInterval(intervalId);
+        $('.js-time').empty();
+    }
+
+    let totalCorrect = 0;
+    let totalWrong = 0;
+    function isAnswerCorrect(){
+        if (userAnswer === q.correctAnswer){
+            console.log("answer is correct");
+            $('.js-result').text("You got it right!");
+            // also show image
+
+        }
+        else{
+            console.log("answer not correct");
+            $('.js-result').text("You got it wrong");
+        }
     }
     function inBetweenCount(){
         // get the user answer and compare it to the correct one
         // new function isAnswerCorrect to check
-        userAnswers = $('input[name='+qNum+']:checked').val();
-        console.log(userAnswers);
-
+        //userAnswer = $('input[name='+qNum+']:checked').val();
+        //console.log(userAnswer);
+        isAnswerCorrect();
         if( questions.length !== 0){
             let betweenCount = 3;
-            let testTimer = true;
             $('.js-answers').empty();
             $('.js-questions').empty();
-            setInterval(function(){
-                if (testTimer){
-                    $('.js-time').text(betweenCount);
-                    betweenCount--;
-                    if (betweenCount < 0){
-                        testTimer = false;
-                        // call the function to get first question
-                        console.log("time up for wait");
-                        $('.js-time').empty();
-                        getQuestion();
-                        
-                    }
-                }
-                
-            }, 1000);
+            countDown(betweenCount, getQuestion);
+            
             qNum++;
         }
         else{
             console.log("inbetween done");
         }
     }
-    function startGame(){
-        let beginGame = true;
-        // Initialize get ready screen and preliminary countdown
+
+    function initializeStartScreen(){
         $('.js-questions').text("Get ready");
-        //$('.js-title').addClass('hide');
         $('.js-start').addClass('hide');
-        startTime = 3;
+    }
+
+    function countDown(startNum, func){
+        let continueToCount = true;
+        let countTime = startNum;
         intervalId = setInterval(function(){
-            if (beginGame){
-                $('.js-time').text(startTime);
-                startTime--;
-                if (startTime < 0){
-                    beginGame = false;
+            if (continueToCount){
+                $('.js-time').text(countTime);
+                countTime--;
+                if (countTime < 0){
+                    continueToCount = false;
                     // call the function to get first question
                     console.log("Game Start");
                     $('.js-time').empty();
-                    getQuestion();
+                    func();
                 }
             }
             
         }, 1000);
+
+    }
+    function startGame(){
+        let startCount = 3;
+        // Initialize get ready screen and preliminary countdown
+        initializeStartScreen();
+        countDown(startCount, getQuestion);
     }
 
     
@@ -168,6 +156,15 @@ $(document).ready(function(){
 
     $('.js-stop').on('click', function(){
         stopGame();
+    });
+
+    $('.js-answers').on('click', function(){
+        console.log("clicked");
+        userAnswer = $('input[name='+qNum+']:checked').val();
+        // check the answer
+        // run the inbetween screen
+        stopTimer();
+        inBetweenCount();
     });
 });
 

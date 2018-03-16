@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
     // variables
+    var intervalID = 0;
+    var time = 0;
     let questions = [
         {
             "question": "What is my name",
@@ -42,18 +44,95 @@ $(document).ready(function(){
         $('.js-right').text(count);
         */
     }
-    // functions 
+    // start game will start first countdown asking to get ready
+    // then call function to actually show the first question/answer pair
+    let startTime = 0;
+    let beginGame = true;
+
+    let qNum = 0;
+  
+
+    // get first element of questions array
+    function getQuestion(){
+        let q = questions.shift(); // object 
+        $('.js-questions').text(q.question);
+        for (var i = 0; i < q.answer.length; i++){
+            $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
+        }
+        qNum++;
+
+        let testTimer = true;
+        let gameTime = 5;
+        setInterval(function(){
+            if (testTimer){
+                $('.js-time').text(gameTime);
+                gameTime--;
+                if (gameTime < 0){
+                    testTimer = false;
+                    // call the function to get first question
+                    console.log("time up for question");
+                    $('.js-time').empty();
+                
+                }
+            }
+            
+        }, 1000);
+    }
+
+    function inBetweenCount(){
+        let betweenCount = 3;
+        let testTimer = true;
+        setInterval(function(){
+            if (testTimer){
+                $('.js-time').text(betweenCount);
+                betweenCount--;
+                if (betweenCount < 0){
+                    testTimer = false;
+                    // call the function to get first question
+                    console.log("time up for question");
+                    $('.js-time').empty();
+                    // if questions array is not empty, grab another question
+                    if (questions.length !== 0){
+                        getQuestion();
+                    }
+                    else{
+                        console.log("no more questions");
+                    }
+                }
+            }
+            
+        }, 1000);
+    }
     function startGame(){
-        for (var i = 0; i < questions.length; i++){
+        
+        /*for (var i = 0; i < questions.length; i++){
             $('.js-questions').append('<p>' + questions[i].question + '</p>');
             for (var j = 0; j < questions[i].answer.length; j++){
                 $('.js-questions').append('<input type="radio" value = "'+questions[i].answer[j]+'" name = "'+ i + '">' + questions[i].answer[j]+'</input>');
             }
-        }
+        }*/
+        $('.js-questions').text("Get ready");
+        //$('.js-title').addClass('hide');
+        $('.js-start').addClass('hide');
+        startTime = 3;
+        intervalId = setInterval(function(){
+            
+            if (beginGame){
+                $('.js-time').text(startTime);
+                startTime--;
+                if (startTime < 0){
+                    beginGame = false;
+                    // call the function to get first question
+                    console.log(startTime);
+                    $('.js-time').empty();
+                    getQuestion();
+                }
+            }
+            
+        }, 1000);
     }
-    
 
-    // events
+    
     // click start button
     $('.js-start').on('click', function(){
         startGame();

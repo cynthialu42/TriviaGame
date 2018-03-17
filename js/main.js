@@ -32,35 +32,29 @@ $(document).ready(function(){
 
     let userAnswer = '';
 
-    function stopGame(){
-        $('.js-questions input:checked').each(function(){
-            console.log($(this).val());
-            let answerChecked = $(this).val();
-            if (answerChecked === questions[$(this).attr('name')].correctAnswer){
-                console.log('hi');
-            }
-            else console.log('bye');
-        });
-
     let startTime = 0;
    
 
     let qNum = 0;
   
     let q = '';
+    let newArr = [];
+    let qArr = [];
     // get first element of questions array
     function getQuestion(){
         $('.js-result').empty();
         userAnswer = '';
+        
         if (questions.length > 0){
             q = questions.shift(); // take out the first object 
+            newArr.push(q);
             $('.js-questions').text(q.question);
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
                 $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
             }
             
-            let gameTime = 5;
+            let gameTime = 3;
             countDown(gameTime, inBetweenCount);
         }
         else{
@@ -99,7 +93,7 @@ $(document).ready(function(){
     function inBetweenCount(){
         isAnswerCorrect();
         if( questions.length !== 0){
-            let betweenCount = 3;
+            let betweenCount = 2;
             $('.js-answers').empty();
             $('.js-questions').empty();
             countDown(betweenCount, getQuestion);
@@ -112,6 +106,7 @@ $(document).ready(function(){
             $('.js-score-correct').text(`correct: ${totalCorrect}`);
             $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
             $('.js-result').text(`Unanswered: ${totalEmpty}`);
+            $('.js-restart').removeClass('hide');
         }
     }
 
@@ -165,14 +160,20 @@ $(document).ready(function(){
         stopTimer();
         inBetweenCount();
     });
+    $('.js-restart').on('click', function(){
+        questions = newArr;
+        newArr = [];
+        $('.js-result').empty();
+        $('.js-answers').empty();
+        $('.js-questions').empty();
+        $('.js-score-correct').empty();
+        $('.js-score-incorrect').empty();
+        $('.js-result').empty();
+        totalCorrect = 0;
+        totalWrong = 0;
+        totalEmpty = 0;
+        $('.js-restart').addClass('hide');
+        getQuestion();
+    });
+  
 });
-
-
-
-    
-        /*for (var i = 0; i < questions.length; i++){
-            $('.js-questions').append('<p>' + questions[i].question + '</p>');
-            for (var j = 0; j < questions[i].answer.length; j++){
-                $('.js-questions').append('<input type="radio" value = "'+questions[i].answer[j]+'" name = "'+ i + '">' + questions[i].answer[j]+'</input>');
-            }
-        }*/

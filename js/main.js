@@ -15,6 +15,18 @@ $(document).ready(function(){
             "answer": ["lu","l","lou","luo"],
             "correctAnswer": "lu",
             "image": "la",
+        },
+        {
+            "question": "What is my middle name",
+            "answer": ["lu","l","you","luo"],
+            "correctAnswer": "you",
+            "image": "la",
+        },
+        {
+            "question": "What color",
+            "answer": ["lu","l","lou","green"],
+            "correctAnswer": "green",
+            "image": "la",
         }
     ]
 
@@ -29,28 +41,7 @@ $(document).ready(function(){
             }
             else console.log('bye');
         });
-/*
-        for (let i = 0; i < questions.length; i++){
-            userAnswer.push($('input[name=q'+i+']:checked').val());
-        }
-        $('.js-answers').append(userAnswer);
-        
-        let count = 0;
-        for (let j = 0; j < userAnswer.length; j++){
-            if (userAnswer[j] === questions[j].correctAnswer){
-                count++;
-            }
-        }
-        $('.js-right').text(count);
-        */
-    }
 
-    /*function submitAnswer(){
-        userAnswer = $('input[name='+qNum+']:checked').val();
-
-    }*/
-    // start game will start first countdown asking to get ready
-    // then call function to actually show the first question/answer pair
     let startTime = 0;
    
 
@@ -59,7 +50,8 @@ $(document).ready(function(){
     let q = '';
     // get first element of questions array
     function getQuestion(){
-        // Check array is populated
+        $('.js-result').empty();
+        userAnswer = '';
         if (questions.length > 0){
             q = questions.shift(); // take out the first object 
             $('.js-questions').text(q.question);
@@ -68,7 +60,7 @@ $(document).ready(function(){
                 $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
             }
             
-            let gameTime = 10;
+            let gameTime = 5;
             countDown(gameTime, inBetweenCount);
         }
         else{
@@ -85,34 +77,41 @@ $(document).ready(function(){
 
     let totalCorrect = 0;
     let totalWrong = 0;
+    let totalEmpty = 0;
     function isAnswerCorrect(){
         if (userAnswer === q.correctAnswer){
-            console.log("answer is correct");
             $('.js-result').text("You got it right!");
             // also show image
+            totalCorrect++;
 
         }
+        else if (userAnswer === ''){
+            $('.js-result').text("You didn't answer in time");
+            totalEmpty++;
+        }
         else{
-            console.log("answer not correct");
             $('.js-result').text("You got it wrong");
+            totalWrong++;
+            console.log(userAnswer);
         }
     }
+
     function inBetweenCount(){
-        // get the user answer and compare it to the correct one
-        // new function isAnswerCorrect to check
-        //userAnswer = $('input[name='+qNum+']:checked').val();
-        //console.log(userAnswer);
         isAnswerCorrect();
         if( questions.length !== 0){
             let betweenCount = 3;
             $('.js-answers').empty();
             $('.js-questions').empty();
             countDown(betweenCount, getQuestion);
-            
             qNum++;
         }
         else{
-            console.log("inbetween done");
+            $('.js-result').empty();
+            $('.js-answers').empty();
+            $('.js-questions').empty();
+            $('.js-score-correct').text(`correct: ${totalCorrect}`);
+            $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
+            $('.js-result').text(`Unanswered: ${totalEmpty}`);
         }
     }
 

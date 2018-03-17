@@ -49,7 +49,9 @@ $(document).ready(function(){
             $('.js-questions').text(q.question);
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
-                $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
+                $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input>');
+                //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + ' id = "' + q.answer[i] + '> <label for= "' + q.answer[i] + '">' + q.answer[i] + '</label>');
+
             }
             
             let gameTime = 1;
@@ -107,12 +109,16 @@ $(document).ready(function(){
 
     function showResults(){
         $('.js-result').empty();
-            $('.js-answers').empty();
-            $('.js-questions').empty();
-            $('.js-score-correct').text(`correct: ${totalCorrect}`);
-            $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
-            $('.js-result').text(`Unanswered: ${totalEmpty}`);
-            $('.js-restart').removeClass('hide');
+        $('.js-answers').empty();
+        $('.js-questions').empty();
+        $('.js-score-correct').text(`correct: ${totalCorrect}`);
+        $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
+        $('.js-result').text(`Unanswered: ${totalEmpty}`);
+        $('.js-restart').removeClass('hide');
+
+        if (totalCorrect > (totalWrong + totalEmpty)){
+            $('.js-message').removeClass('hide').text("Wow you know a lot!");
+        }
     }
     function initializeStartScreen(){
         $('.js-questions').text("Get ready");
@@ -161,6 +167,7 @@ $(document).ready(function(){
         $('.js-score-incorrect').empty();
         $('.js-result').empty();
         $('.js-restart').addClass('hide');
+        $('.js-message').empty();
     }
     
     // click start button

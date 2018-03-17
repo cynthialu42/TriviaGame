@@ -38,27 +38,25 @@ $(document).ready(function(){
     let qNum = 0;
   
     let q = '';
-    let newArr = [];
     let qArr = [];
     // get first element of questions array
     function getQuestion(){
         $('.js-result').empty();
         userAnswer = '';
-        
         if (questions.length > 0){
             q = questions.shift(); // take out the first object 
-            newArr.push(q);
+            qArr.push(q);
             $('.js-questions').text(q.question);
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
                 $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input');
             }
             
-            let gameTime = 3;
+            let gameTime = 1;
             countDown(gameTime, inBetweenCount);
         }
         else{
-            console.log("no more questions");
+            showResults();
         }
         
     }
@@ -84,7 +82,7 @@ $(document).ready(function(){
             totalEmpty++;
         }
         else{
-            $('.js-result').text("You got it wrong");
+            $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}`);
             totalWrong++;
             console.log(userAnswer);
         }
@@ -92,24 +90,30 @@ $(document).ready(function(){
 
     function inBetweenCount(){
         isAnswerCorrect();
-        if( questions.length !== 0){
-            let betweenCount = 2;
+        if( questions.length > 0){
+            let betweenCount = 1;
             $('.js-answers').empty();
             $('.js-questions').empty();
             countDown(betweenCount, getQuestion);
             qNum++;
         }
         else{
-            $('.js-result').empty();
+            let test = 2;
+            $('.js-answers').empty();
+            $('.js-questions').empty();
+            countDown(test, showResults);
+        }
+    }
+
+    function showResults(){
+        $('.js-result').empty();
             $('.js-answers').empty();
             $('.js-questions').empty();
             $('.js-score-correct').text(`correct: ${totalCorrect}`);
             $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
             $('.js-result').text(`Unanswered: ${totalEmpty}`);
             $('.js-restart').removeClass('hide');
-        }
     }
-
     function initializeStartScreen(){
         $('.js-questions').text("Get ready");
         $('.js-start').addClass('hide');
@@ -135,12 +139,29 @@ $(document).ready(function(){
 
     }
     function startGame(){
-        let startCount = 3;
+        let startCount = 1;
         // Initialize get ready screen and preliminary countdown
         initializeStartScreen();
+        console.log(qArr);
+        console.log(questions);
         countDown(startCount, getQuestion);
     }
 
+    function reset(){
+        questions = qArr;
+        qArr = [];
+        totalCorrect = 0;
+        totalWrong = 0;
+        totalEmpty = 0;
+
+        $('.js-result').empty();
+        $('.js-answers').empty();
+        $('.js-questions').empty();
+        $('.js-score-correct').empty();
+        $('.js-score-incorrect').empty();
+        $('.js-result').empty();
+        $('.js-restart').addClass('hide');
+    }
     
     // click start button
     $('.js-start').on('click', function(){
@@ -160,19 +181,9 @@ $(document).ready(function(){
         stopTimer();
         inBetweenCount();
     });
+
     $('.js-restart').on('click', function(){
-        questions = newArr;
-        newArr = [];
-        $('.js-result').empty();
-        $('.js-answers').empty();
-        $('.js-questions').empty();
-        $('.js-score-correct').empty();
-        $('.js-score-incorrect').empty();
-        $('.js-result').empty();
-        totalCorrect = 0;
-        totalWrong = 0;
-        totalEmpty = 0;
-        $('.js-restart').addClass('hide');
+        reset();
         getQuestion();
     });
   

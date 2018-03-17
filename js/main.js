@@ -49,11 +49,12 @@ $(document).ready(function(){
             $('.js-questions').text(q.question);
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
-                $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input>');
-                //$('.js-answers').append('<label for="' + q.answer[i] + '"><input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + '" id = "' + q.answer[i] + '">' +  q.answer[i] + '</label>');
+                // https://stackoverflow.com/questions/16242980/making-radio-buttons-look-like-buttons-instead
+                //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input>');
+                //$('.js-answers').append('<label for="' + q.answer[i] + '" name = "' + qNum + '"><input type = "radio"  value = "' + q.answer[i] + '" name = "' + qNum + '" id = "' + q.answer[i] + '">' +  q.answer[i] + '</label>');
                 //$('.js-answers').append('<label for="' + q.answer[i] + '">' +  q.answer[i] + '</label>');
                 //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + ' id = "' + q.answer[i] + '> <label for= "' + q.answer[i] + '">' + q.answer[i] + '</label>');
-  
+                $('.js-answers').append(`<button class = "answer-selection" data-name = "${q.answer[i]}"> ${q.answer[i]} </button>`);
             }
             
             let gameTime = 60;
@@ -182,14 +183,27 @@ $(document).ready(function(){
         stopGame();
     });
 
-    $('.js-answers').on('click', function(){
+    /*$('.js-answers').on('click', function(){
         console.log("clicked");
         userAnswer = $('input[name='+qNum+']:checked').val();
+        //userAnswer = $('input[name='+qNum+']').val();
+
         // check the answer
         // run the inbetween screen
+        //userAnswer = $(this).val();
+        console.log(userAnswer);
+        let name = $(this).attr('data-name');
+        alert(name);
         stopTimer();
         inBetweenCount();
-    });
+    });*/
+
+    function checkAnswers(){
+        userAnswer = $(this).attr('data-name');
+        stopTimer();
+        inBetweenCount();
+    }
+    $(document).on("click", ".answer-selection", checkAnswers);
 
     $('.js-restart').on('click', function(){
         reset();

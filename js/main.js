@@ -50,11 +50,13 @@ $(document).ready(function(){
             // print out answer selections
             for (var i = 0; i < q.answer.length; i++){
                 $('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input>');
+                //$('.js-answers').append('<label for="' + q.answer[i] + '"><input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + '" id = "' + q.answer[i] + '">' +  q.answer[i] + '</label>');
+                //$('.js-answers').append('<label for="' + q.answer[i] + '">' +  q.answer[i] + '</label>');
                 //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + ' id = "' + q.answer[i] + '> <label for= "' + q.answer[i] + '">' + q.answer[i] + '</label>');
-
+  
             }
             
-            let gameTime = 1;
+            let gameTime = 60;
             countDown(gameTime, inBetweenCount);
         }
         else{

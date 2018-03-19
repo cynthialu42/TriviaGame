@@ -8,25 +8,25 @@ $(document).ready(function(){
             "question": "What is my name",
             "answer": ["Cynt","this","thiea","Cynthia"],
             "correctAnswer": "Cynthia",
-            "image": "la",
+            "image": "./images/owl-fight.gif",
         },
         {
             "question": "What is my last name",
             "answer": ["lu","l","lou","luo"],
             "correctAnswer": "lu",
-            "image": "la",
+            "image": "./images/owl-fight.gif",
         },
         {
             "question": "What is my middle name",
             "answer": ["lu","l","you","luo"],
             "correctAnswer": "you",
-            "image": "la",
+            "image": "./images/owl-fight.gif",
         },
         {
             "question": "What color",
             "answer": ["lu","l","lou","green"],
             "correctAnswer": "green",
-            "image": "la",
+            "image": "./images/owl-fight.gif",
         }
     ]
 
@@ -42,6 +42,7 @@ $(document).ready(function(){
     // get first element of questions array
     function getQuestion(){
         $('.js-result').empty();
+        $('.js-img').empty();
         userAnswer = '';
         if (questions.length > 0){
             q = questions.shift(); // take out the first object 
@@ -57,7 +58,7 @@ $(document).ready(function(){
                 $('.js-answers').append(`<button class = "answer-selection" data-name = "${q.answer[i]}"> ${q.answer[i]} </button>`);
             }
             
-            let gameTime = 60;
+            let gameTime = 15;
             countDown(gameTime, inBetweenCount);
         }
         else{
@@ -93,8 +94,12 @@ $(document).ready(function(){
         }
     }
 
+  
     function inBetweenCount(){
         isAnswerCorrect();
+
+        $('.js-img').html('<img width: "50" height: "50" src = "' + q.image + '">');
+
         if( questions.length > 0){
             let betweenCount = 1;
             $('.js-answers').empty();
@@ -133,14 +138,20 @@ $(document).ready(function(){
         let countTime = startNum;
         intervalId = setInterval(function(){
             if (continueToCount){
-                $('.js-time').text(countTime);
-                countTime--;
                 if (countTime < 0){
                     continueToCount = false;
                     // call the function to get first question
                     console.log("Game Start");
-                    $('.js-time').empty();
+                    $('.js-time').empty().removeClass('red');
                     func();
+                }
+                else if(countTime < 10){
+                    $('.js-time').text(countTime).addClass('red');
+                    countTime--;
+                }
+                else{
+                    $('.js-time').text(countTime);
+                    countTime--;
                 }
             }
             

@@ -5,27 +5,51 @@ $(document).ready(function(){
     var time = 0;
     let questions = [
         {
-            "question": "What is my name",
-            "answer": ["Cynt","this","thiea","Cynthia"],
-            "correctAnswer": "Cynthia",
+            "question": "The most yolks to come out of a chicken egg is:",
+            "answer": ["3","6","9","12"],
+            "correctAnswer": "9",
             "image": "./images/owl-fight.gif",
         },
         {
-            "question": "What is my last name",
-            "answer": ["lu","l","lou","luo"],
-            "correctAnswer": "lu",
+            "question": "The oldest parrot lived to 82yrs. What is his name?",
+            "answer": ["Polly","Pinky","Cookie","Muffin"],
+            "correctAnswer": "Cookie",
             "image": "./images/owl-fight.gif",
         },
         {
-            "question": "What is my middle name",
-            "answer": ["lu","l","you","luo"],
-            "correctAnswer": "you",
+            "question": "This little guy does a funky bobbing dance while walking:",
+            "answer": ["woodcock","snipe","sandpiper","sanderling"],
+            "correctAnswer": "woodcock",
             "image": "./images/owl-fight.gif",
         },
         {
-            "question": "What color",
-            "answer": ["lu","l","lou","green"],
-            "correctAnswer": "green",
+            "question": "Which of these birds are altricial?",
+            "answer": ["chickens","ducks","pigeons","turkeys"],
+            "correctAnswer": "pigeons",
+            "image": "./images/owl-fight.gif",
+        },
+        {
+            "question": "What is a group of owls called?",
+            "answer": ["parliament","congress","assembly","legislature"],
+            "correctAnswer": "parliament",
+            "image": "./images/owl-fight.gif",
+        },
+        {
+            "question": "A large group of starlings flying together is referred to as a:",
+            "answer": ["swarm","mutterance","murmuration","murderation"],
+            "correctAnswer": "murmuration",
+            "image": "./images/owl-fight.gif",
+        },
+        {
+            "question": "A hummingbird's heartrate averages how many beats per minute?",
+            "answer": ["600","900","1200","1500"],
+            "correctAnswer": "1200",
+            "image": "./images/owl-fight.gif",
+        },
+        {
+            "question": "Which of these birds are native to Australia?",
+            "answer": ["cockatoos","pionuses","macaws","caique"],
+            "correctAnswer": "cockatoos",
             "image": "./images/owl-fight.gif",
         }
     ]
@@ -84,11 +108,11 @@ $(document).ready(function(){
 
         }
         else if (userAnswer === ''){
-            $('.js-result').text("You didn't answer in time");
+            $('.js-result').text("You didn't answer in time :(");
             totalEmpty++;
         }
         else{
-            $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}`);
+            $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}!`);
             totalWrong++;
             console.log(userAnswer);
         }
@@ -98,7 +122,7 @@ $(document).ready(function(){
     function inBetweenCount(){
         isAnswerCorrect();
 
-        $('.js-img').html('<img width: "50" height: "50" src = "' + q.image + '">');
+        $('.js-img').html('<img  src = "' + q.image + '" height: "50" >');
 
         if( questions.length > 0){
             let betweenCount = 1;

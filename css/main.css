@@ -93,7 +93,7 @@
     font-size: 2em;
     border: 3px dashed white;
     margin: 40px 20px;
-    padding: 0em .5em;
+    padding: .2em .5em;
 
     flex-wrap: wrap;
 }

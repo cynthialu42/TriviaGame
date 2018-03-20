@@ -8,49 +8,49 @@ $(document).ready(function(){
             "question": "The most yolks to come out of a chicken egg is:",
             "answer": ["3","6","9","12"],
             "correctAnswer": "9",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/gudetama.gif",
         },
         {
             "question": "The oldest parrot lived to 82yrs. What is his name?",
             "answer": ["Polly","Pinky","Cookie","Muffin"],
             "correctAnswer": "Cookie",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/cookie.jpg",
         },
         {
             "question": "This little guy does a funky bobbing dance while walking:",
             "answer": ["woodcock","snipe","sandpiper","sanderling"],
             "correctAnswer": "woodcock",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/peent.gif",
         },
         {
             "question": "Which of these birds are altricial?",
             "answer": ["chickens","ducks","pigeons","turkeys"],
             "correctAnswer": "pigeons",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/pigeon.gif",
         },
         {
             "question": "What is a group of owls called?",
             "answer": ["parliament","congress","assembly","legislature"],
             "correctAnswer": "parliament",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/owl.gif",
         },
         {
             "question": "A large group of starlings flying together is referred to as a:",
             "answer": ["swarm","mutterance","murmuration","murderation"],
             "correctAnswer": "murmuration",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/starlings.gif",
         },
         {
             "question": "A hummingbird's heartrate averages how many beats per minute?",
             "answer": ["600","900","1200","1500"],
             "correctAnswer": "1200",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/hummingbird.gif",
         },
         {
             "question": "Which of these birds are native to Australia?",
             "answer": ["cockatoos","pionuses","macaws","caique"],
             "correctAnswer": "cockatoos",
-            "image": "./images/owl-fight.gif",
+            "image": "./images/cockatoo.gif",
         }
     ]
 
@@ -143,13 +143,16 @@ $(document).ready(function(){
         $('.js-result').empty();
         $('.js-answers').empty();
         $('.js-questions').empty();
-        $('.js-score-correct').text(`correct: ${totalCorrect}`);
+        $('.js-score-correct').text(`Correct: ${totalCorrect}`);
         $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
         $('.js-result').text(`Unanswered: ${totalEmpty}`);
         $('.js-restart').removeClass('hide');
         $('.js-img').empty();
         if (totalCorrect > (totalWrong + totalEmpty)){
-            $('.js-message').removeClass('hide').text("Wow you know a lot!");
+            $('.js-message').removeClass('hide').text("Wow you know a lot about birds!");
+        }
+        else{
+            $('.js-message').removeClass('hide').addClass('red').text("*Several crows caw in the distance, coming closer...*");
         }
     }
     function initializeStartScreen(){

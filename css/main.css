@@ -1,18 +1,8 @@
-.hide{
-    display: none;
-}
-
-.stuff{
-    font-family: 'Homemade Apple', cursive;
-    font-family: 'Coming Soon', cursive;
-    font-family: 'Love Ya Like A Sister', cursive;
-    font-family: 'Fredericka the Great', cursive;
-    font-family: 'Nanum Pen Script', cursive;
-}
 .background{
     background-image: url("../images/upfeathers.png");
 }
 
+/* Text Styling */
 .title{
     font-family: 'Homemade Apple', cursive;
     color: white;
@@ -33,6 +23,7 @@
 .action-button:hover{
     transform: scale(1.1);
 }
+
 .questions{
     font-family: 'Love Ya Like A Sister', cursive;
     color: white;
@@ -40,6 +31,7 @@
     padding: 1em 0em;
 
 }
+
 .timer{
     font-family: 'Homemade Apple', cursive;
     color: white;
@@ -58,6 +50,8 @@
 
 
 }
+
+/* Chalkboard Styling */
 .container{
     background: rgb(32, 32, 32);
     width: 80%;
@@ -96,6 +90,8 @@
     right: 70px;
     border-top: 15px solid rgb(29, 29, 29);
 }
+
+/* Special Effects */
 .answer-selection{
     font-family: 'Nanum Pen Script', cursive;
     background: none;
@@ -110,11 +106,17 @@
 .answer-selection:hover{
     transform: scale(1.1);
 }
+
+.hide{
+    display: none;
+}
+
 .red{
     color: rgb(253, 23, 23);
     transform: scale(1.5);
 }
 
+/* Footer */
 .footer{
     display: flex;
     width: 100%;

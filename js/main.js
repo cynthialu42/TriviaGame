@@ -65,7 +65,7 @@ $(document).ready(function(){
 
     // Begins the game
     function startGame(){
-        let startCount = 1;
+        let startCount = 3;
         initializeStartScreen();
         countDown(startCount, getQuestion);
     }
@@ -135,7 +135,7 @@ $(document).ready(function(){
         $('.js-img').html('<img  src = "' + q.image + '" >');
 
         if( questions.length > 0){
-            let betweenCount = 1;
+            let betweenCount = 5;
             $('.js-answers').empty();
             $('.js-questions').empty();
             countDown(betweenCount, getQuestion);

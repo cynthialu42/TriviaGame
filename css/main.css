@@ -17,11 +17,12 @@
     font-family: 'Homemade Apple', cursive;
     color: white;
     font-size: 3em;
-    margin: 15px 0px;
+    padding: 15px 0px;
+
 
 }
 
-.play-button{
+.action-button{
     font-family: 'Nanum Pen Script', cursive;
     background: none;
     color: white;
@@ -29,7 +30,34 @@
     border: 3px dashed white;
     margin: 40px 0px;
     padding: 0em .5em;
-    
+}
+
+.action-button:hover{
+    transform: scale(1.1);
+}
+.questions{
+    font-family: 'Love Ya Like A Sister', cursive;
+    color: white;
+    font-size: 3em;
+    padding: 1em 0em;
+
+}
+.timer{
+    font-family: 'Homemade Apple', cursive;
+    color: white;
+    position: absolute;
+    z-index: 98;
+    top: 25px; 
+    right: 50px;
+    font-size: 5em;
+}
+
+.text{
+    font-family: 'Coming Soon', cursive;
+    color: white;
+    font-size: 2em;
+    padding: .7em 0em;
+
 
 }
 .container{
@@ -59,13 +87,34 @@
     right: 35px;
 }
 .answer-selection{
-    border: 2px solid green;
-    background: yellow;
-    margin: 1em;
+    font-family: 'Nanum Pen Script', cursive;
+    background: none;
+    color: white;
+    font-size: 2em;
+    border: 3px dashed white;
+    margin: 40px 20px;
+    padding: 0em .5em;
+
     flex-wrap: wrap;
 }
 
+.answer-selection:hover{
+    transform: scale(1.1);
+}
 .red{
     color: red;
+}
+
+.footer{
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    color: black;
+    font-family: 'Nanum Pen Script', cursive;
+
 }
 

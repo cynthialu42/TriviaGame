@@ -2,22 +2,62 @@
     display: none;
 }
 
+.stuff{
+    font-family: 'Homemade Apple', cursive;
+    font-family: 'Coming Soon', cursive;
+    font-family: 'Love Ya Like A Sister', cursive;
+    font-family: 'Fredericka the Great', cursive;
+    font-family: 'Nanum Pen Script', cursive;
+}
 .background{
-    background: plum;
+    background-image: url("../images/upfeathers.png");
+}
+
+.title{
+    font-family: 'Homemade Apple', cursive;
+    color: white;
+    font-size: 3em;
+    margin: 15px 0px;
+
+}
+
+.play-button{
+    font-family: 'Nanum Pen Script', cursive;
+    background: none;
+    color: white;
+    font-size: 3em;
+    border: 3px dashed white;
+    margin: 40px 0px;
+    padding: 0em .5em;
+    
+
 }
 .container{
-    background: papayawhip;
+    background: rgb(32, 32, 32);
     width: 80%;
     padding: 2em 2em;
     margin: auto;
-    margin-top: 4em;
+    margin-top: 3em;
     justify-content: center;
     text-align: center;
     flex-wrap: wrap;
     align-items: center;
-    
+    height: 510px;
+    border: 30px solid rgb(223, 176, 102);
+    border-radius: 25px;
+    background: linear-gradient(to bottom right, rgb(51, 51, 51), rgb(19, 19, 19));
+    position: relative;
 }
 
+.chalk{
+    position: absolute;
+    width: 100px;
+    height: 15px;
+    background: white;
+    z-index: 99;
+    bottom: 0;
+    right: 35px;
+}
 .answer-selection{
     border: 2px solid green;
     background: yellow;

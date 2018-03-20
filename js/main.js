@@ -123,7 +123,7 @@ $(document).ready(function(){
         $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
         $('.js-result').text(`Unanswered: ${totalEmpty}`);
         $('.js-restart').removeClass('hide');
-
+        $('.js-img').empty();
         if (totalCorrect > (totalWrong + totalEmpty)){
             $('.js-message').removeClass('hide').text("Wow you know a lot!");
         }

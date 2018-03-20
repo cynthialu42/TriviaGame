@@ -35,7 +35,7 @@ $(document).ready(function(){
             "question": "Which of these birds are altricial?",
             "answer": ["chickens","ducks","pigeons","turkeys"],
             "correctAnswer": "pigeons",
-            "image": "./images/pigeon.gif",
+            "image": "./images/pigeon1.gif",
         },
         {
             "question": "What is a group of owls called?",

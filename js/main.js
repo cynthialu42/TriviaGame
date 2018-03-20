@@ -1,8 +1,17 @@
 $(document).ready(function(){
 
-    // variables
+    // Global variables
     var intervalId = 0;
     var time = 0;
+    let userAnswer = '';
+    let startTime = 0;
+    let qNum = 0;
+    let q = '';
+    let qArr = [];
+    let totalCorrect = 0;
+    let totalWrong = 0;
+    let totalEmpty = 0;
+
     let questions = [
         {
             "question": "The most yolks to come out of a chicken egg is:",
@@ -54,112 +63,21 @@ $(document).ready(function(){
         }
     ]
 
-    let userAnswer = '';
-
-    let startTime = 0;
-   
-
-    let qNum = 0;
-  
-    let q = '';
-    let qArr = [];
-    // get first element of questions array
-    function getQuestion(){
-        $('.js-result').empty();
-        $('.js-img').empty();
-        userAnswer = '';
-        if (questions.length > 0){
-            q = questions.shift(); // take out the first object 
-            qArr.push(q);
-            $('.js-questions').text(q.question);
-            // print out answer selections
-            for (var i = 0; i < q.answer.length; i++){
-                // https://stackoverflow.com/questions/16242980/making-radio-buttons-look-like-buttons-instead
-                //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '"name = "' + qNum + '">' + q.answer[i] + '</input>');
-                //$('.js-answers').append('<label for="' + q.answer[i] + '" name = "' + qNum + '"><input type = "radio"  value = "' + q.answer[i] + '" name = "' + qNum + '" id = "' + q.answer[i] + '">' +  q.answer[i] + '</label>');
-                //$('.js-answers').append('<label for="' + q.answer[i] + '">' +  q.answer[i] + '</label>');
-                //$('.js-answers').append('<input type = "radio" value = "' + q.answer[i] + '" name = "' + qNum + ' id = "' + q.answer[i] + '> <label for= "' + q.answer[i] + '">' + q.answer[i] + '</label>');
-                $('.js-answers').append(`<button class = "answer-selection" data-name = "${q.answer[i]}"> ${q.answer[i]} </button>`);
-            }
-            
-            let gameTime = 15;
-            countDown(gameTime, inBetweenCount);
-        }
-        else{
-            showResults();
-        }
-        
+    // Begins the game
+    function startGame(){
+        let startCount = 1;
+        initializeStartScreen();
+        countDown(startCount, getQuestion);
     }
 
-
-    function stopTimer(){
-        clearInterval(intervalId);
-        $('.js-time').empty();
-    }
-
-    let totalCorrect = 0;
-    let totalWrong = 0;
-    let totalEmpty = 0;
-    function isAnswerCorrect(){
-        if (userAnswer === q.correctAnswer){
-            $('.js-result').text("You got it right!");
-            // also show image
-            totalCorrect++;
-
-        }
-        else if (userAnswer === ''){
-            $('.js-result').text("You didn't answer in time :(");
-            totalEmpty++;
-        }
-        else{
-            $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}!`);
-            totalWrong++;
-            console.log(userAnswer);
-        }
-    }
-
-  
-    function inBetweenCount(){
-        isAnswerCorrect();
-
-        $('.js-img').html('<img  src = "' + q.image + '" height: "50" >');
-
-        if( questions.length > 0){
-            let betweenCount = 1;
-            $('.js-answers').empty();
-            $('.js-questions').empty();
-            countDown(betweenCount, getQuestion);
-            qNum++;
-        }
-        else{
-            let test = 2;
-            $('.js-answers').empty();
-            $('.js-questions').empty();
-            countDown(test, showResults);
-        }
-    }
-
-    function showResults(){
-        $('.js-result').empty();
-        $('.js-answers').empty();
-        $('.js-questions').empty();
-        $('.js-score-correct').text(`Correct: ${totalCorrect}`);
-        $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
-        $('.js-result').text(`Unanswered: ${totalEmpty}`);
-        $('.js-restart').removeClass('hide');
-        $('.js-img').empty();
-        if (totalCorrect > (totalWrong + totalEmpty)){
-            $('.js-message').removeClass('hide').text("Wow you know a lot about birds!");
-        }
-        else{
-            $('.js-message').removeClass('hide').addClass('red').text("*Several crows caw in the distance, coming closer...*");
-        }
-    }
+    // Screen before start of questions
     function initializeStartScreen(){
-        $('.js-questions').text("Get ready");
+        $('.js-questions').text("Get ready...!");
         $('.js-start').addClass('hide');
     }
 
+    // Parameters: integer and function callback
+    // Count down from the startNum and then execute func as appropriate
     function countDown(startNum, func){
         let continueToCount = true;
         let countTime = startNum;
@@ -185,15 +103,102 @@ $(document).ready(function(){
         }, 1000);
 
     }
-    function startGame(){
-        let startCount = 1;
-        // Initialize get ready screen and preliminary countdown
-        initializeStartScreen();
-        console.log(qArr);
-        console.log(questions);
-        countDown(startCount, getQuestion);
+
+
+    // Get the question and associated answers
+    function getQuestion(){
+        $('.js-result').empty();
+        $('.js-img').empty();
+        userAnswer = '';
+        if (questions.length > 0){
+            q = questions.shift(); // take out the first object 
+            qArr.push(q);
+            $('.js-questions').text(q.question);
+            // print out answer selections
+            for (var i = 0; i < q.answer.length; i++){
+                $('.js-answers').append(`<button class = "answer-selection" data-name = "${q.answer[i]}"> ${q.answer[i]} </button>`);
+            }
+            
+            let gameTime = 15;
+            countDown(gameTime, inBetweenCount);
+        }
+        else{
+            showResults();
+        }
+        
     }
 
+    // Screen that appears between questions
+    function inBetweenCount(){
+
+        isAnswerCorrect();
+        $('.js-img').html('<img  src = "' + q.image + '" >');
+
+        if( questions.length > 0){
+            let betweenCount = 1;
+            $('.js-answers').empty();
+            $('.js-questions').empty();
+            countDown(betweenCount, getQuestion);
+            qNum++;
+        }
+        else{
+            let test = 2;
+            $('.js-answers').empty();
+            $('.js-questions').empty();
+            countDown(test, showResults);
+        }
+    }
+
+    // Check if answer is correct 
+    function isAnswerCorrect(){
+        if (userAnswer === q.correctAnswer){
+            $('.js-result').text("You got it right!");
+            totalCorrect++;
+
+        }
+        else if (userAnswer === ''){
+            $('.js-result').text("You didn't answer in time :(");
+            totalEmpty++;
+        }
+        else{
+            $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}!`);
+            totalWrong++;
+            console.log(userAnswer);
+        }
+    }
+
+    // Check selection with answer
+    function checkAnswers(){
+        userAnswer = $(this).attr('data-name');
+        stopTimer();
+        inBetweenCount();
+    }
+
+    // Display the final tally of answers
+    function showResults(){
+        $('.js-result').empty();
+        $('.js-answers').empty();
+        $('.js-questions').empty();
+        $('.js-score-correct').text(`Correct: ${totalCorrect}`);
+        $('.js-score-incorrect').text(`Incorrect: ${totalWrong}`);
+        $('.js-result').text(`Unanswered: ${totalEmpty}`);
+        $('.js-restart').removeClass('hide');
+        $('.js-img').empty();
+        if (totalCorrect > (totalWrong + totalEmpty)){
+            $('.js-message').removeClass('hide').text("Wow you know a lot about birds!");
+        }
+        else{
+            $('.js-message').removeClass('hide').addClass('red').text("*Several crows caw in the distance, coming closer...*");
+        }
+    }
+
+    // Stop the countdown 
+    function stopTimer(){
+        clearInterval(intervalId);
+        $('.js-time').empty();
+    }
+
+    // Resets game to first question
     function reset(){
         questions = qArr;
         qArr = [];
@@ -210,38 +215,18 @@ $(document).ready(function(){
         $('.js-restart').addClass('hide');
         $('.js-message').empty();
     }
-    
-    // click start button
+
+
+    // Click Events
+    $(document).on("click", ".answer-selection", checkAnswers);
+
     $('.js-start').on('click', function(){
         startGame();
     });
-    // click submit button
 
     $('.js-stop').on('click', function(){
         stopGame();
     });
-
-    /*$('.js-answers').on('click', function(){
-        console.log("clicked");
-        userAnswer = $('input[name='+qNum+']:checked').val();
-        //userAnswer = $('input[name='+qNum+']').val();
-
-        // check the answer
-        // run the inbetween screen
-        //userAnswer = $(this).val();
-        console.log(userAnswer);
-        let name = $(this).attr('data-name');
-        alert(name);
-        stopTimer();
-        inBetweenCount();
-    });*/
-
-    function checkAnswers(){
-        userAnswer = $(this).attr('data-name');
-        stopTimer();
-        inBetweenCount();
-    }
-    $(document).on("click", ".answer-selection", checkAnswers);
 
     $('.js-restart').on('click', function(){
         reset();

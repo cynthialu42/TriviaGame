@@ -85,8 +85,6 @@ $(document).ready(function(){
             if (continueToCount){
                 if (countTime < 0){
                     continueToCount = false;
-                    // call the function to get first question
-                    console.log("Game Start");
                     $('.js-time').empty().removeClass('red');
                     func();
                 }
@@ -99,9 +97,7 @@ $(document).ready(function(){
                     countTime--;
                 }
             }
-            
         }, 1000);
-
     }
 
 
@@ -125,7 +121,6 @@ $(document).ready(function(){
         else{
             showResults();
         }
-        
     }
 
     // Screen that appears between questions
@@ -154,7 +149,6 @@ $(document).ready(function(){
         if (userAnswer === q.correctAnswer){
             $('.js-result').text("You got it right!");
             totalCorrect++;
-
         }
         else if (userAnswer === ''){
             $('.js-result').text("You didn't answer in time :(");
@@ -163,7 +157,6 @@ $(document).ready(function(){
         else{
             $('.js-result').text(`You got it wrong! The answer is ${q.correctAnswer}!`);
             totalWrong++;
-            console.log(userAnswer);
         }
     }
 
